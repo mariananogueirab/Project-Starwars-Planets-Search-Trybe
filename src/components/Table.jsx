@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import './table.css';
 
 function Table() {
   const { filteredPlanets, loading, planets } = useContext(PlanetsContext);
@@ -16,7 +17,7 @@ function Table() {
   return (
     <div>
       {loading ? (
-        <table>
+        <table className="table">
           <thead>
             <tr>
               {renderColumns}
@@ -36,7 +37,5 @@ function Table() {
     </div>
   );
 }
-
-Table.contextType = PlanetsContext;
 
 export default Table;

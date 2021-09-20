@@ -1,0 +1,15 @@
+.container {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+button {
+  background-color: #FF5C58;
+  border-radius: 9px;
+  color: white;
+  font-weight: 700;
+  height: fit-content;
+  padding: 4px;
+}

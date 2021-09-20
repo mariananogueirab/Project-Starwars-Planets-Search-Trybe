@@ -11,18 +11,35 @@ function PlanetsProvider({ children }) {
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filtersObject, setFilters] = useState({
-    filters: {
-      filterByName: {
-        name: '',
+    filters:
+      {
+        filterByName: {
+          name: '',
+        },
+        filterByNumericValues: [],
       },
-    },
   });
+
   const filterName = filtersObject.filters.filterByName.name;
+  const filterNumericValues = [...filtersObject.filters.filterByNumericValues];
 
   function setFilterByName(name) {
     const newFiltersObj = { ...filtersObject,
       filters: { ...filtersObject.filters,
         filterByName: { name },
+      } };
+    setFilters(newFiltersObj);
+  }
+
+  function setFilterByNumericValues(column, comparison, value) {
+    const newFiltersObj = { ...filtersObject,
+      filters: { ...filtersObject.filters,
+        filterByNumericValues: [...filtersObject.filters.filterByNumericValues,
+          {
+            column,
+            comparison,
+            value,
+          }],
       } };
     setFilters(newFiltersObj);
   }
@@ -37,19 +54,51 @@ function PlanetsProvider({ children }) {
     fetchPlanets();
   }, []);
 
+  function comparisonEquation(comp) {
+    switch (comp) {
+    case comp === 'maior que':
+      return '>';
+    case comp === 'menor que':
+      return '<';
+    case comp === 'iagual a':
+      return '===';
+    default:
+      return '';
+    }
+  }
+
   useEffect(() => {
+    // tenho o nome mas não tenho valor
+    // tenho o nome e tenho valor
+    // não tenho nome e tenho valor
     if (filterName !== '') {
       const planetsF = planets
         .filter((planet) => planet.name.toLowerCase().includes(filterName));
       setFilteredPlanets(planetsF);
-    } else {
+    }
+    /* if (filterName !== '' && filterNumericValues.length > 0) {
+      let planetsFinal = [];
+
+
+      const equacao = comparisonEquation(comparison);
+      planetsFinal = [...planetsFinal, planets.filter((planet) => planet.name.toLowerCase().includes(filterName) && (planet[filterNumericValues[0].column] >= filterNumericValues[0].value.toString()))];
+
+      console.log(planetsFinal);
+      setFilteredPlanets(planetsFinal);
+    } */ else {
       setFilteredPlanets([...planets]);
     }
-  }, [filterName, planets]);
+  }, [filterName, filterNumericValues.length, planets]);
 
   return (
     <PlanetsContext.Provider
-      value={ { filteredPlanets, loading, setFilterByName, filtersObject, planets } }
+      value={ {
+        filteredPlanets,
+        loading,
+        setFilterByName,
+        filtersObject,
+        planets,
+        setFilterByNumericValues } }
     >
       {children}
     </PlanetsContext.Provider>
