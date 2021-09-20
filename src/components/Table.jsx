@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { planets, loading } = useContext(PlanetsContext);
+  const { filteredPlanets, loading, planets } = useContext(PlanetsContext);
 
-  planets.forEach((planet) => delete planet.residents);
+  filteredPlanets.forEach((planet) => delete planet.residents);
 
   const renderColumns = (
     loading && Object.keys(planets[0])
@@ -24,7 +24,7 @@ function Table() {
           </thead>
           <tbody>
 
-            {planets.map((planet) => (
+            {filteredPlanets.map((planet) => (
               <tr key={ planet.name }>
                 {Object.values(planet)
                   .map((item, index) => <td key={ index }>{item}</td>)}
