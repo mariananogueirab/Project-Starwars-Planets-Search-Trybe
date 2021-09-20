@@ -11,9 +11,11 @@ function FiltersProvider({ children }) {
     },
   });
 
-  const filterByText = (text) => {
-    setFilters({ ...filtersObject, name: text });
-  };
+  function filterByText(text) {
+    const newFiltersObj = filtersObject;
+    newFiltersObj.filters.filterByName.name = text;
+    setFilters(newFiltersObj);
+  }
 
   return (
     <FiltersContext.Provider value={ { filtersObject, filterByText } }>

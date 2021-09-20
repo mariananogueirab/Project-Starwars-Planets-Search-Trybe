@@ -9,11 +9,12 @@ function App() {
   return (
     <div>
       <FiltersProvider>
-        <Filters />
+        <PlanetsProvider>
+          <Filters />
+          <Table />
+        </PlanetsProvider>
       </FiltersProvider>
-      <PlanetsProvider>
-        <Table />
-      </PlanetsProvider>
+
     </div>
   );
 }

@@ -18,6 +18,7 @@ function Input({ type, onChange, testid, value }) {
 Input.propTypes = {
   type: PropTypes.string.isRequired,
   testid: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

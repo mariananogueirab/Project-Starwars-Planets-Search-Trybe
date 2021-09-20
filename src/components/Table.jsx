@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { planets } = useContext(PlanetsContext);
+  const { planets, loading } = useContext(PlanetsContext);
 
   planets.forEach((planet) => delete planet.residents);
 
   const renderColumns = (
-    planets.length > 0 && Object.keys(planets[0])
+    loading && Object.keys(planets[0])
       .map((columnName, index) => (
         <th key={ index }>{columnName}</th>
       ))
@@ -15,7 +15,7 @@ function Table() {
 
   return (
     <div>
-      {planets.length > 0 && (
+      {loading ? (
         <table>
           <thead>
             <tr>
@@ -32,7 +32,7 @@ function Table() {
             ))}
 
           </tbody>
-        </table>)}
+        </table>) : 'loading'}
     </div>
   );
 }

@@ -1,18 +1,20 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import FiltersContext from '../context/FiltersContext';
 import Input from './Input';
 
 function Filters() {
-  const { filtersObject, filterByText } = useContext(FiltersContext);
-  console.log(filtersObject.filters)
+  const [name, setName] = useState('');
+  const { filterByText } = useContext(FiltersContext);
+
+  filterByText(name);
 
   return (
     <div>
       <Input
         type="text"
-        value={ filtersObject.filters.filterByName.name }
+        value={ name }
         testid="name-filter"
-        onChange={ (event) => filterByText(event.target.value) }
+        onChange={ (event) => setName(event.target.value) }
       />
     </div>
   );
