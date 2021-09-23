@@ -22,7 +22,6 @@ function PlanetsProvider({ children }) {
   });
 
   const filterName = filtersObject.filters.filterByName.name;
-  const filterNumericValues = [...filtersObject.filters.filterByNumericValues];
 
   function setFilterByName(name) {
     const newFiltersObj = { ...filtersObject,
@@ -71,7 +70,7 @@ function PlanetsProvider({ children }) {
   }, [filterName, planets]);
 
   useEffect(() => {
-    if (currFilterByNum !== {}) {
+    if (currFilterByNum.column) {
       const { column, comparison, value } = currFilterByNum;
       const planetsFiltered = planets
         .filter((planet) => {
