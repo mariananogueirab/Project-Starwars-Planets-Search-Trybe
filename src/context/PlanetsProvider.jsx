@@ -71,7 +71,7 @@ function PlanetsProvider({ children }) {
   }, [filterName, planets]);
 
   useEffect(() => {
-    if (filterNumericValues.length > 0) {
+    if (currFilterByNum !== {}) {
       const { column, comparison, value } = currFilterByNum;
       const planetsFiltered = planets
         .filter((planet) => {
@@ -86,7 +86,7 @@ function PlanetsProvider({ children }) {
         });
       setFilteredPlanets(planetsFiltered);
     }
-  }, [currFilterByNum, planets, filterNumericValues]);
+  }, [currFilterByNum, planets]);
 
   return (
     <PlanetsContext.Provider
