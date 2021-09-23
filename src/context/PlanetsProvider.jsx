@@ -10,6 +10,7 @@ function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [currFilterByNum, setCurrFilterByNum] = useState({});
   const [filtersObject, setFilters] = useState({
     filters:
       {
@@ -42,6 +43,11 @@ function PlanetsProvider({ children }) {
           }],
       } };
     setFilters(newFiltersObj);
+    setCurrFilterByNum({
+      column,
+      comparison,
+      value,
+    });
   }
 
   useEffect(() => {
@@ -54,41 +60,32 @@ function PlanetsProvider({ children }) {
     fetchPlanets();
   }, []);
 
-  function comparisonEquation(comp) {
-    switch (comp) {
-    case comp === 'maior que':
-      return '>';
-    case comp === 'menor que':
-      return '<';
-    case comp === 'iagual a':
-      return '===';
-    default:
-      return '';
-    }
-  }
-
   useEffect(() => {
-    // tenho o nome mas não tenho valor
-    // tenho o nome e tenho valor
-    // não tenho nome e tenho valor
     if (filterName !== '') {
       const planetsF = planets
         .filter((planet) => planet.name.toLowerCase().includes(filterName));
       setFilteredPlanets(planetsF);
-    }
-    /* if (filterName !== '' && filterNumericValues.length > 0) {
-      let planetsFinal = [];
-
-
-      const equacao = comparisonEquation(comparison);
-      planetsFinal = [...planetsFinal, planets.filter((planet) => planet.name.toLowerCase().includes(filterName) && (planet[filterNumericValues[0].column] >= filterNumericValues[0].value.toString()))];
-
-      console.log(planetsFinal);
-      setFilteredPlanets(planetsFinal);
-    } */ else {
+    } else {
       setFilteredPlanets([...planets]);
     }
-  }, [filterName, filterNumericValues.length, planets]);
+  }, [filterName, planets]);
+
+  useEffect(() => {
+    if (filterNumericValues.length > 0) {
+      const { column, comparison, value } = currFilterByNum;
+      const planetsFiltered = planets
+        .filter((planet) => {
+          if (comparison === 'maior que') {
+            return Number(planet[column]) > Number(value);
+          } if (comparison === 'menor que') {
+            return Number(planet[column]) < Number(value);
+          } if (comparison === 'igual a') {
+            return Number(planet[column]) === Number(value);
+          }
+        });
+      setFilteredPlanets(planetsFiltered);
+    }
+  }, [currFilterByNum, planets, filterNumericValues]);
 
   return (
     <PlanetsContext.Provider
