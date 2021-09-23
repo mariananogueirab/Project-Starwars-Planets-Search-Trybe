@@ -18,7 +18,8 @@ function Filters() {
   const comparisonOptions = ['maior que', 'menor que', 'igual a'];
   const { filters: { filterByName: { name } } } = filtersObject;
   const { filters: { filterByNumericValues } } = filtersObject;
-  const optionsOfColumns = ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+  const optionsOfColumns = (
+    ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
 
   useEffect(() => {
     if (filterByNumericValues.length > 0) {
