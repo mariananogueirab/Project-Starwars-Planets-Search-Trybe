@@ -18,6 +18,10 @@ function PlanetsProvider({ children }) {
           name: '',
         },
         filterByNumericValues: [],
+        order: {
+          column: 'Name',
+          sort: 'ASC',
+        },
       },
   });
 
@@ -95,7 +99,8 @@ function PlanetsProvider({ children }) {
         setFilterByName,
         filtersObject,
         planets,
-        setFilterByNumericValues } }
+        setFilterByNumericValues,
+        currFilterByNum } }
     >
       {children}
     </PlanetsContext.Provider>

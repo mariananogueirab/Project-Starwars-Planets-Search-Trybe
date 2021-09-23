@@ -28,7 +28,10 @@ function Table() {
             {filteredPlanets.map((planet) => (
               <tr key={ planet.name }>
                 {Object.values(planet)
-                  .map((item, index) => <td key={ index }>{item}</td>)}
+                  .map((item, index) => (
+                    index === 0 ? <td key={ index } data-testid="planet-name">{item}</td>
+                      : <td key={ index }>{item}</td>
+                  ))}
               </tr>
             ))}
 
